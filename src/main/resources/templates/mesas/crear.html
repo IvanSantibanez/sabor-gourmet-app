@@ -10,8 +10,8 @@
 
 <body>
   <div class="row" layout:fragment="page-content">
-    <h2>Formulario para agregar una mesa</h2>
-    <div class="container mt-5">
+    <h2 class="my-5 text-center">Formulario para agregar una mesa</h2>
+    <div class="container">
       <form th:action="@{/mesas/agregar}" th:object="${mesa}" th:method="post">
         <div class="mb-3">
           <label for="numero" class="form-label">Ingrese el número de mesa</label>
