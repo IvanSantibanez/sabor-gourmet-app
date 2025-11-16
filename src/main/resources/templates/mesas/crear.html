@@ -1,16 +1,42 @@
 <!DOCTYPE html>
-<html lang="es"
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{layout/master}">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sabor Gourmet - Crear Mesa</title>
 </head>
+
 <body>
   <div class="row" layout:fragment="page-content">
-        <h2>Vista crear mesa</h2>
-      </div> 
+    <h2>Formulario para agregar una mesa</h2>
+    <div class="container mt-5">
+      <form th:action="@{/mesas/agregar}" th:object="${mesa}" th:method="post">
+        <div class="mb-3">
+          <label for="numero" class="form-label">Ingrese el número de mesa</label>
+          <input type="number" min="1" class="form-control" id="numero" th:field="*{numero}">
+          <div class="text-danger" th:if="${#fields.hasErrors('numero')}" th:errors="*{numero}"></div>
+        </div>
+        <div class="mb-3">
+          <select class="form-select" th:field="*{tipo}" aria-label="Seleccionar tipo de mesa">
+            <option value="" selected>Seleccione el tipo de mesa</option>
+            <option th:value="cuadrada" th:text="Cuadrada"></option>
+            <option th:value="rectangular" th:text="Rectangular"></option>
+            <option th:value="redonda" th:text="Redonda"></option>
+          </select>
+          <div class="text-danger" th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}"></div>
+        </div>
+        <div class="mb-3">
+          <label for="capacidad" class="form-label">Ingrese la capacidad de la mesa</label>
+          <input type="number" min="1" max="20" class="form-control" id="capacidad" th:field="*{capacidad}">
+          <div th:if="${#fields.hasErrors('capacidad')}" th:errors="*{capacidad}"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </form>
+    </div>
+  </div>
 </body>
+
 </html>
