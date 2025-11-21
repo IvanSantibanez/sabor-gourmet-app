@@ -1,71 +1,60 @@
 <!DOCTYPE html>
-<html
-  lang="es"
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout/master}"
->
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sabor Gourmet - Listar Reservas</title>
-  </head>
-  <body>
-    <div class="row mt-5" layout:fragment="page-content">
-      <h2 class="text-center">Lista de reservas</h2>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/master}">
 
-      <div
-        th:if="${success}"
-        class="alert alert-success"
-        th:text="${success}"
-      ></div>
-      <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sabor Gourmet - Listar Reservas</title>
+</head>
 
-      <div class="d-flex justify-content-center p-4">
-        <a class="btn btn-success" th:href="@{/reservas/agregar}"
-          >Agregar Reserva</a
-        >
-      </div>
+<body>
+  <div class="row mt-5" layout:fragment="page-content">
+    <h2 class="text-center">Lista de reservas</h2>
 
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Teléfono</th>
-            <th>Correo</th>
-            <th>Mesa</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="res : ${reservas}">
-            <td th:text="${res.fecha}"></td>
-            <td th:text="${res.nombreCliente}"></td>
-            <td th:text="${res.apellidoCliente}"></td>
-            <td th:text="${res.telefonoCliente}"></td>
-            <td th:text="${res.correoCliente}"></td>
-            <td th:text="${res.mesa != null ? res.mesa.numero : '—'}"></td>
-            <td>
-              <div class="d-flex gap-2">
-                <a
-                  class="btn btn-primary"
-                  th:href="@{'/reservas/editar/' + ${res.id}}"
-                  >Editar</a
-                >
-                <a
-                  class="btn btn-danger"
-                  th:href="@{'/reservas/eliminar/' + ${res.id}}"
-                  th:attr="onclick=|return confirm('¿Eliminar la reserva de ${res.nombreCliente} ${res.apellidoCliente} para la fecha ${res.fecha}?');|"
-                >
-                  Eliminar
-                </a>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show fade-out">
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      <span th:text="${error}"></span>
     </div>
-  </body>
+
+    <div class="d-flex justify-content-center p-4">
+      <a class="btn btn-success" th:href="@{/reservas/agregar}">Agregar Reserva</a>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Teléfono</th>
+          <th>Correo</th>
+          <th>Mesa</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="res : ${reservas}">
+          <td th:text="${res.fecha}"></td>
+          <td th:text="${res.nombreCliente}"></td>
+          <td th:text="${res.apellidoCliente}"></td>
+          <td th:text="${res.telefonoCliente}"></td>
+          <td th:text="${res.correoCliente}"></td>
+          <td th:text="${res.mesa != null ? res.mesa.numero : '—'}"></td>
+          <td>
+            <div class="d-flex gap-2">
+              <a class="btn btn-primary" th:href="@{'/reservas/editar/' + ${res.id}}">Editar</a>
+              <a class="btn btn-danger" th:href="@{'/reservas/eliminar/' + ${res.id}}"
+                th:attr="onclick=|return confirm('¿Eliminar la reserva de ${res.nombreCliente} ${res.apellidoCliente} para la fecha ${res.fecha}?');|">
+                Eliminar
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
 </html>

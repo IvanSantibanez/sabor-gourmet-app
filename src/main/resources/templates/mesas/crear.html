@@ -11,6 +11,13 @@
 <body>
   <div class="row" layout:fragment="page-content">
     <h2 class="my-5 text-center">Formulario para agregar una mesa</h2>
+
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show fade-out">
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      <span th:text="${error}"></span>
+    </div>
+
     <div class="container">
       <form th:action="@{/mesas/agregar}" th:object="${mesa}" th:method="post">
         <div class="mb-3">

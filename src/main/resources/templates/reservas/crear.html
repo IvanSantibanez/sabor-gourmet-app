@@ -1,138 +1,75 @@
 <!DOCTYPE html>
-<html
-  lang="es"
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout/master}"
->
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sabor Gourmet - Crear Reserva</title>
-  </head>
-  <body>
-    <div class="row mt-5" layout:fragment="page-content">
-      <h2 class="mb-4">Crear Reserva</h2>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/master}">
 
-      <div
-        th:if="${success}"
-        class="alert alert-success"
-        th:text="${success}"
-      ></div>
-      <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sabor Gourmet - Crear Reserva</title>
+</head>
 
-      <form
-        th:object="${reserva}"
-        th:action="@{/reservas/agregar}"
-        method="post"
-        class="w-50"
-      >
-        <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
-          <ul>
-            <li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
-          </ul>
-        </div>
+<body>
+  <div class="row mt-5" layout:fragment="page-content">
+    <h2 class="mb-4">Crear Reserva</h2>
 
-        <div class="mb-3">
-          <label for="fecha" class="form-label">Fecha</label>
-          <input
-            type="date"
-            id="fecha"
-            class="form-control"
-            th:field="*{fecha}"
-          />
-          <div
-            class="text-danger"
-            th:if="${#fields.hasErrors('fecha')}"
-            th:errors="*{fecha}"
-          ></div>
-        </div>
-
-        <div class="mb-3">
-          <label for="nombreCliente" class="form-label">Nombre</label>
-          <input
-            type="text"
-            id="nombreCliente"
-            class="form-control"
-            th:field="*{nombreCliente}"
-          />
-          <div
-            class="text-danger"
-            th:if="${#fields.hasErrors('nombreCliente')}"
-            th:errors="*{nombreCliente}"
-          ></div>
-        </div>
-
-        <div class="mb-3">
-          <label for="apellidoCliente" class="form-label">Apellido</label>
-          <input
-            type="text"
-            id="apellidoCliente"
-            class="form-control"
-            th:field="*{apellidoCliente}"
-          />
-          <div
-            class="text-danger"
-            th:if="${#fields.hasErrors('apellidoCliente')}"
-            th:errors="*{apellidoCliente}"
-          ></div>
-        </div>
-
-        <div class="mb-3">
-          <label for="telefonoCliente" class="form-label">Teléfono</label>
-          <input
-            type="text"
-            id="telefonoCliente"
-            class="form-control"
-            th:field="*{telefonoCliente}"
-          />
-          <div
-            class="text-danger"
-            th:if="${#fields.hasErrors('telefonoCliente')}"
-            th:errors="*{telefonoCliente}"
-          ></div>
-        </div>
-
-        <div class="mb-3">
-          <label for="correoCliente" class="form-label">Correo</label>
-          <input
-            type="email"
-            id="correoCliente"
-            class="form-control"
-            th:field="*{correoCliente}"
-          />
-          <div
-            class="text-danger"
-            th:if="${#fields.hasErrors('correoCliente')}"
-            th:errors="*{correoCliente}"
-          ></div>
-        </div>
-
-        <div class="mb-3">
-          <label for="mesa" class="form-label">Mesa</label>
-          <select id="mesa" class="form-select" th:field="*{mesa.id}">
-            <option
-              th:value="-1"
-              th:text="'-- Seleccione una mesa --'"
-            ></option>
-            <option
-              th:each="m : ${mesas}"
-              th:value="${m.id}"
-              th:text="${m.numero} + ' - ' + ${m.tipo}"
-            ></option>
-          </select>
-          <div
-            class="text-danger"
-            th:if="${#fields.hasErrors('mesa')}"
-            th:errors="*{mesa}"
-          ></div>
-        </div>
-
-        <div class="d-flex gap-2">
-          <button type="submit" class="btn btn-primary">Crear</button>
-          <a class="btn btn-secondary" th:href="@{/reservas}">Cancelar</a>
-        </div>
-      </form>
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show fade-out">
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      <span th:text="${error}"></span>
     </div>
-  </body>
+
+    <form th:object="${reserva}" th:action="@{/reservas/agregar}" method="post" class="w-50">
+      <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+        <ul>
+          <li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
+        </ul>
+      </div>
+
+      <div class="mb-3">
+        <label for="fecha" class="form-label">Fecha</label>
+        <input type="date" id="fecha" class="form-control" th:field="*{fecha}" />
+        <div class="text-danger" th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}"></div>
+      </div>
+
+      <div class="mb-3">
+        <label for="nombreCliente" class="form-label">Nombre</label>
+        <input type="text" id="nombreCliente" class="form-control" th:field="*{nombreCliente}" />
+        <div class="text-danger" th:if="${#fields.hasErrors('nombreCliente')}" th:errors="*{nombreCliente}"></div>
+      </div>
+
+      <div class="mb-3">
+        <label for="apellidoCliente" class="form-label">Apellido</label>
+        <input type="text" id="apellidoCliente" class="form-control" th:field="*{apellidoCliente}" />
+        <div class="text-danger" th:if="${#fields.hasErrors('apellidoCliente')}" th:errors="*{apellidoCliente}"></div>
+      </div>
+
+      <div class="mb-3">
+        <label for="telefonoCliente" class="form-label">Teléfono</label>
+        <input type="text" id="telefonoCliente" class="form-control" th:field="*{telefonoCliente}" />
+        <div class="text-danger" th:if="${#fields.hasErrors('telefonoCliente')}" th:errors="*{telefonoCliente}"></div>
+      </div>
+
+      <div class="mb-3">
+        <label for="correoCliente" class="form-label">Correo</label>
+        <input type="email" id="correoCliente" class="form-control" th:field="*{correoCliente}" />
+        <div class="text-danger" th:if="${#fields.hasErrors('correoCliente')}" th:errors="*{correoCliente}"></div>
+      </div>
+
+      <div class="mb-3">
+        <label for="mesa" class="form-label">Mesa</label>
+        <select id="mesa" class="form-select" th:field="*{mesa.id}">
+          <option th:value="-1" th:text="'-- Seleccione una mesa --'"></option>
+          <option th:each="m : ${mesas}" th:value="${m.id}" th:text="${m.numero} + ' - ' + ${m.tipo}"></option>
+        </select>
+        <div class="text-danger" th:if="${#fields.hasErrors('mesa')}" th:errors="*{mesa}"></div>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Crear</button>
+        <a class="btn btn-secondary" th:href="@{/reservas}">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</body>
+
 </html>

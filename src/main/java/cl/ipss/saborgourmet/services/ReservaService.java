@@ -39,8 +39,7 @@ public class ReservaService {
     if (mesaId == null) {
       return false;
     }
-    long idLong = mesaId.longValue();
     return reservaRepository.findAll().stream()
-        .anyMatch(r -> r.getMesa() != null && r.getMesa().getId() == idLong);
+        .anyMatch(r -> r.getMesa() != null && r.getMesa().getId() == mesaId);
   }
 }

@@ -21,7 +21,8 @@
         class="w-50"
       >
         <!-- errores globales dentro del form -->
-        <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+        <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger alert-dismissible fade show fade-out">
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
           <ul>
             <li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
           </ul>
