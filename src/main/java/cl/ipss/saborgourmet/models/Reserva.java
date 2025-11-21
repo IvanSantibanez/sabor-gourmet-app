@@ -2,6 +2,7 @@ package cl.ipss.saborgourmet.models;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -9,13 +10,20 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
+@Table(
+  uniqueConstraints = @UniqueConstraint(name = "uk_reserva_mesa_fecha", columnNames = {"mesa_id", "fecha"})
+)
 public class Reserva {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+
+    @Column(nullable = false)
     private LocalDate fecha;
     private String nombreCliente;
     private String apellidoCliente;
@@ -23,13 +31,13 @@ public class Reserva {
     private String correoCliente;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_mesa")
+    @JoinColumn(name = "mesa_id", nullable = false)
     private Mesa mesa;
 
     public Reserva() {
     }
 
-    public Reserva(long id, LocalDate fecha, String nombreCliente, String apellidoCliente, String telefonoCliente,
+    public Reserva(Long id, LocalDate fecha, String nombreCliente, String apellidoCliente, String telefonoCliente,
         String correoCliente, Mesa mesa) {
       this.id = id;
       this.fecha = fecha;
@@ -40,11 +48,11 @@ public class Reserva {
       this.mesa = mesa;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

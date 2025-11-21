@@ -1,16 +1,105 @@
 <!DOCTYPE html>
-<html lang="es"
+<html
+  lang="es"
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout/master}">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sabor Gourmet - Editar Mesa</title>
-</head>
-<body>
-  <div class="row" layout:fragment="page-content">
-        <h2>Vista editar mesas</h2>
-      </div> 
-</body>
+  layout:decorate="~{layout/master}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sabor Gourmet - Editar Mesa</title>
+  </head>
+  <body>
+    <div class="row mt-5" layout:fragment="page-content">
+      <h2 class="mb-4">Editar Mesa</h2>
+
+      <form
+        th:object="${mesa}"
+        th:action="@{/mesas/editar/{id}(id=${mesa.id})}"
+        method="post"
+        class="w-50"
+      >
+        <!-- errores globales dentro del form -->
+        <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+          <ul>
+            <li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
+          </ul>
+        </div>
+
+        <!-- mensaje simple desde el controller -->
+        <div
+          th:if="${error}"
+          class="alert alert-danger"
+          th:text="${error}"
+        ></div>
+
+        <div class="mb-3">
+          <label for="numero" class="form-label">Número de mesa</label>
+          <input
+            type="number"
+            min="1"
+            id="numero"
+            class="form-control"
+            th:field="*{numero}"
+          />
+          <div
+            class="text-danger"
+            th:if="${#fields.hasErrors('numero')}"
+            th:errors="*{numero}"
+          ></div>
+        </div>
+
+        <div class="mb-3">
+          <label for="tipo" class="form-label">Tipo de mesa</label>
+          <select
+            id="tipo"
+            class="form-select"
+            th:field="*{tipo}"
+            aria-label="Seleccionar tipo de mesa"
+          >
+            <option value="" disabled>Seleccione el tipo de mesa</option>
+            <option value="cuadrada">Cuadrada</option>
+            <option value="rectangular">Rectangular</option>
+            <option value="redonda">Redonda</option>
+          </select>
+          <div
+            class="text-danger"
+            th:if="${#fields.hasErrors('tipo')}"
+            th:errors="*{tipo}"
+          ></div>
+        </div>
+
+        <div class="mb-3">
+          <label for="capacidad" class="form-label">Capacidad</label>
+          <input
+            type="number"
+            min="1"
+            max="20"
+            id="capacidad"
+            class="form-control"
+            th:field="*{capacidad}"
+          />
+          <div
+            class="text-danger"
+            th:if="${#fields.hasErrors('capacidad')}"
+            th:errors="*{capacidad}"
+          ></div>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <a class="btn btn-secondary" th:href="@{/mesas}">Cancelar</a>
+
+          <a
+            class="btn btn-danger ms-auto"
+            th:href="@{'/mesas/eliminar/' + ${mesa.id}}"
+            th:onclick="|return confirm('¿Eliminar la mesa número ${mesa.numero}? Esta acción no se puede deshacer.');|"
+          >
+            Eliminar
+          </a>
+        </div>
+      </form>
+    </div>
+  </body>
 </html>
